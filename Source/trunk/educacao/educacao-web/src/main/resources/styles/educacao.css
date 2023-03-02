@@ -1,0 +1,32 @@
+.td_lista_alunos_frequencia {
+	width: 50%;
+	vertical-align: top;
+}
+
+.td_filtro {
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 5px;
+	border-bottom: 1px dotted #BBB;
+}
+
+.td_botao_moveraluno {
+	width: 60px;
+	vertical-align: middle;
+}
+
+.label_cabecalho {
+	font-weight: bold;
+}
+
+.row_aluno_registrarchamada {
+	height: 10px;
+}
+
+.select_lista_alunos_frequencia {
+	width:100%;
+}
+
+.img_botao_moveraluno {
+	cursor: pointer;
+}

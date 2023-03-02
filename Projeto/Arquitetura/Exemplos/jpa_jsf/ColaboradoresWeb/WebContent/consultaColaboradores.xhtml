@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<body>
+	<h:outputStylesheet name="css/cursoStyles.css" />
+	<h:form>
+		<h:inputText value="#{consultaColaboradoresController.baseFiltro}">
+
+		</h:inputText>
+		<a4j:commandButton value="Buscar" action="#{consultaColaboradoresController.buscarColaboradores}" render="panelConsultaColaboradores" />
+		<a4j:region>
+			<rich:panel id="panelConsultaColaboradores">
+				<rich:dataTable id="dataTableColaboradores" value="#{consultaColaboradoresController.colaboradores}" var="colaborador" rowKeyVar="row">
+					<f:facet name="header">
+						<h:outputText value="Lista de Colaboradores" />
+					</f:facet>
+					<rich:column>
+						<f:facet name="header">Base</f:facet>
+						<h:outputText value="${colaborador.base.codigoBase}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Cpf</f:facet>
+						<h:outputText value="${colaborador.cpf}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="${colaborador.nome}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Data de Nascimento</f:facet>
+						<h:outputText value="${colaborador.dataNascimento}">
+							<f:convertDateTime pattern="#{msgs['comum.formato_data']}" />
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">Excluir</f:facet>
+						<a4j:commandLink value="Excluir" actionListener="#{consultaColaboradoresController.currentRow}" ajaxSingle="true" immediate="true" render="panelConsultaColaboradores">
+							<f:setPropertyActionListener value="#{row}" target="#{consultaColaboradoresController.currentRow}" />
+						</a4j:commandLink>
+					</rich:column>
+				</rich:dataTable>
+				<br />
+				<h:outputText value="#{statusContext.currentMessage}" />
+			</rich:panel>
+		</a4j:region>
+		<br />
+		<a href="index.xhtml">Voltar</a>
+	</h:form>
+	<a4j:status onstart="#{rich:component('modalCarregando')}.show()" onstop="#{rich:component('modalCarregando')}.hide()" />
+	<rich:popupPanel id="modalCarregando" modal="true" autosized="true" resizeable="false" show="false">
+		<h:outputText value="Carregando..." />
+	</rich:popupPanel>
+</body>
+</html>

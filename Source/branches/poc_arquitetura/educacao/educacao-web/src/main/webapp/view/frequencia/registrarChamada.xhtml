@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<link type="text/css" rel="stylesheet"
+		href="../../resources/styles/educacao.css" />
+</h:head>
+<body>
+	<img src="../../images/ninho_logo_imagetext_tiny.jpg" />
+	<br />
+	<br />
+	<h:form>
+		<rich:panel style="width: 485px">
+
+			<f:facet name="header">
+				<h:outputText value="#{i18n['registrarChamada.title']}" />
+			</f:facet>Conversation: <h:outputText value="#{registrarChamadaController.conversation.id}" />
+			<table style="width: 100%">
+				<tr>
+					<td style="text-align: left"><h:outputText
+							value="#{registrarChamadaController.labelDetalhesTurma}"
+							styleClass="label_cabecalho" /></td>
+					<td style="text-align: right"><h:outputText
+							value="#{i18n['registrarChamada.label.dataChamada']}"
+							styleClass="label_cabecalho" />: <h:outputText
+							value="#{registrarChamadaController.dataChamadaFormatado}" /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+
+			<table style="width: 100%; height: 400px">
+				<tr>
+					<td style="vertical-align: top"><rich:extendedDataTable
+							id="dataTableAlunosPresentes" var="aluno"
+							value="#{registrarChamadaController.chamadaTurma.alunosPresentes}"
+							style="width:100%;height:100%;vertical-align:top"
+							noDataLabel="  " selectionMode="multiple"
+							selection="#{registrarChamadaController.presentesSelection}"
+							sortMode="single">
+							<f:facet name="header">
+								<h:outputText value="#{i18n['label.alunosPresentes']}" />
+							</f:facet>
+							<rich:column sortBy="#{aluno.matricula}" selfSorted="true">
+								<f:facet name="header">
+									<h:outputText value="#{i18n['label.matricula']}" />
+								</f:facet>
+
+								<h:outputText value="#{aluno.matricula}" />
+							</rich:column>
+							<rich:column sortBy="#{aluno.nomeAluno}" selfSorted="true">
+								<f:facet name="header">
+									<h:outputText value="#{i18n['label.nome']}" />
+								</f:facet>
+								<h:outputText value="#{aluno.nomeAluno}" />
+							</rich:column>
+						</rich:extendedDataTable></td>
+					<td><a4j:commandLink value=""
+							render="dataTableAlunosPresentes,dataTableAlunosAusentes"
+							action="#{registrarChamadaController.moverSelecionadosParaAusentes}">
+							<img src="../../images/move-right-red.png" />
+						</a4j:commandLink> <br /> <a4j:commandLink value=""
+							render="dataTableAlunosPresentes,dataTableAlunosAusentes"
+							action="#{registrarChamadaController.moverSelecionadosParaPresentes}">
+							<img src="../../images/move-left-green.png" />
+						</a4j:commandLink></td>
+					<td class="td_lista_alunos_frequencia" style="vertical-align: top"><rich:extendedDataTable
+							id="dataTableAlunosAusentes" var="aluno"
+							value="#{registrarChamadaController.chamadaTurma.alunosAusentes}"
+							style="width:100%;height:100%;vertical-align:top"
+							noDataLabel="  " selectionMode="multiple"
+							selection="#{registrarChamadaController.ausentesSelection}">
+							<f:facet name="header">
+								<h:outputText value="#{i18n['label.alunosAusentes']}" />
+							</f:facet>
+							<rich:column sortBy="#{aluno.matricula}">
+								<f:facet name="header">
+									<h:outputText value="#{i18n['label.matricula']}" />
+								</f:facet>
+								<h:outputText value="#{aluno.matricula}" />
+							</rich:column>
+							<rich:column sortBy="#{aluno.nomeAluno}">
+								<f:facet name="header">
+									<h:outputText value="#{i18n['label.nome']}" />
+								</f:facet>
+								<h:outputText value="#{aluno.nomeAluno}" />
+							</rich:column>
+						</rich:extendedDataTable></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<div style="text-align: center">
+				<a4j:commandButton value="#{i18n['button.confirmar']}"
+					action="#{registrarChamadaController.salvarChamada}" />
+				<h:commandButton value="#{i18n['button.cancelar']}"
+					action="#{registrarChamadaController.cancelarChamada}" />
+			</div>
+
+		</rich:panel>
+	</h:form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<link rel="StyleSheet" href="#{facesContext.externalContext.request.contextPath}/resources/css/cursoStyles.css" type="text/css" media="screen" />
+</h:head>
+<f:event listener="#{cadastroColaboradoresController.init}" type="preRenderView" />
+<body>
+	<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/jquery.maskedinput-1.3.js" />
+	<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/textLimit.min.js" />
+	<rich:panel id="panelCadastro">
+		<h:form id="form"><table><tr><td>
+        Base:</td><td><rich:select id="baseInput" value="#{cadastroColaboradoresController.novoColaborador.base.codigoBase}" required="true" requiredMessage="#{msgs['cadastrocolaboradores.baseobrigatorio']}">
+				<f:selectItems value="#{cadastroColaboradoresController.bases}" var="base" itemLabel="#{base.nome}" itemValue="#{base.codigoBase}" />
+			</rich:select>
+			<h:message for="baseInput" style="color:red" /></td></tr>
+			<tr><td>CPF:</td><td><h:inputText id="cpfInput" value="#{cadastroColaboradoresController.novoColaborador.cpf}" maxlength="11" required="true" requiredMessage="#{msgs['cadastrocolaboradores.cpfobrigatorio']}">
+				<f:converter converterId="CpfConverter" />
+				<f:validator validatorId="CpfValidator" />
+			</h:inputText>
+			<rich:jQuery selector="input[id = 'form:cpfInput']" query="mask('999.999.999-99')" timing="domready" />
+			<h:message for="cpfInput" style="color:red" /></td></tr>
+			<tr><td>Nome:</td><td><h:inputText id="nomeInput" value="#{cadastroColaboradoresController.novoColaborador.nome}" required="true" requiredMessage="${msgs['cadastrocolaboradores.nomeobrigatorio']}" />
+			<h:message for="nomeInput" style="color:red" /></td></tr>
+			<tr><td>Data de Nascimento:</td><td><h:inputText id="dataNascimentoInput" value="#{cadastroColaboradoresController.novoColaborador.dataNascimento}" converterMessage="#{msgs['cadastrocolaboradores.datanascimentoinvalida']}" required="true"
+				requiredMessage="${msgs['cadastrocolaboradores.datanascimentoobrigatorio']}">
+				<f:convertDateTime pattern="#{msgs['cadastrocolaboradores.formato_data']}" />
+			</h:inputText>
+			<rich:jQuery selector="input[id = 'form:dataNascimentoInput']" query="mask('99/99/9999')" timing="domready" />
+			<h:message for="dataNascimentoInput" style="color:red" /></td></tr></table>
+			<h:commandButton action="#{cadastroColaboradoresController.salvarColaborador}" value="Salvar" />
+			<br />
+			<h:outputText value="#{statusContext.currentMessage}" />
+			<br />
+			<a href="index.xhtml">Voltar</a>
+		</h:form>
+	</rich:panel>
+</body>
+</html>

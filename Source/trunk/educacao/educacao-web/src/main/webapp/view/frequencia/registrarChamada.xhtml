@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link type="text/css" rel="stylesheet" href="../../styles/educacao.css" />
+</h:head>
+<body>
+	<script src="../../scripts/jquery.multiselects-0.3.js"
+		type="text/javascript" />
+	<script src="../../scripts/registrarChamada.js" type="text/javascript" />
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			setupPickList();
+		});
+	</script>
+	<img src="../../images/ninho_logo_imagetext_tiny.jpg" />
+	<br />
+	<br />
+	<h:form id="formRegistrarChamada">
+		<rich:panel style="width: 485px">
+			<h:messages />
+			<f:facet name="header">
+				<h:outputText value="#{i18n['registrarChamada.title']}" />
+			</f:facet>
+			<table style="width: 100%">
+				<tr>
+					<td style="text-align: left"><h:outputText
+							value="#{registrarChamadaController.labelDetalhesTurma}"
+							styleClass="label_cabecalho" /></td>
+					<td style="text-align: right"><h:outputText
+							value="#{i18n['registrarChamada.label.dataChamada']}"
+							styleClass="label_cabecalho" />: <h:outputText
+							value="#{registrarChamadaController.dataChamadaFormatado}" /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+
+			<table style="width: 100%;">
+				<tr>
+					<td class="td_lista_alunos_frequencia"><select
+						id="pickListPresentes" multiple="multiple" size="30"
+						class="select_lista_alunos_frequencia">
+							<c:forEach items="#{registrarChamadaController.alunosPresentes}"
+								var="aluno">
+								<option value="#{aluno.id}">#{aluno.nomeAluno}</option>
+							</c:forEach>
+					</select></td>
+					<td class="td_botao_moveraluno">
+						<div style="display: inline">
+							<img id="moveRight" src="../../images/move-right-red.png"
+								alt="#{i18n['registrarChamada.tooltip.ausente']}"
+								class="img_botao_moveraluno" /> <img id="moveLeft"
+								src="../../images/move-left-green.png"
+								alt="#{i18n['registrarChamada.tooltip.presente']}"
+								class="img_botao_moveraluno" />
+						</div>
+					</td>
+					<td class="td_lista_alunos_frequencia"><select
+						id="pickListAusentes" multiple="multiple" size="30"
+						class="select_lista_alunos_frequencia">
+							<c:forEach items="#{registrarChamadaController.alunosAusentes}"
+								var="aluno">
+								<option value="#{aluno.id}">#{aluno.nomeAluno}</option>
+							</c:forEach>
+					</select></td>
+				</tr>
+			</table>
+			<h:inputHidden id="idsAusentes"
+				value="#{registrarChamadaController.idsAusentes}" />
+			<h:inputHidden id="idsPresentes"
+				value="#{registrarChamadaController.idsPresentes}" />
+			<br />
+			<br />
+			<div style="text-align: center">
+				<h:commandButton value="#{i18n['button.confirmar']}"
+					action="#{registrarChamadaController.salvarChamada}"
+					onclick="atualizarIdsAlunos()" />
+				<h:commandButton value="#{i18n['button.cancelar']}"
+					action="#{registrarChamadaController.cancelarChamada}" />
+			</div>
+
+		</rich:panel>
+	</h:form>
+</body>
+</html>

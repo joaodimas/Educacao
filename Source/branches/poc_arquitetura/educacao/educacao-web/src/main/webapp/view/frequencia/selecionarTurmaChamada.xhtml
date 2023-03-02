@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<f:event listener="#{registrarChamadaController.selecionarTurmaChamadaPreRender}" type="preRenderView" />
+	
+	<link type="text/css" rel="stylesheet"
+		href="../../resources/styles/educacao.css" />
+</h:head>
+<body>
+	<img src="../../images/ninho_logo_imagetext_tiny.jpg" />
+	<br />
+	<br />
+	<h:form>
+		<rich:panel style="width: 650px">
+			
+			<f:facet name="header">
+				<h:outputText value="#{i18n['selecionarTurmaChamada.title']}" />
+			</f:facet>Conversation: <h:outputText value="#{registrarChamadaController.conversation.id}" />
+			<table>
+				<tr>
+					<td colspan="2" class="td_filtro"><h:outputText
+							value="#{i18n['registrarChamada.label.dataChamada']}" />:<br />
+						<rich:calendar value="#{registrarChamadaController.dataChamada}"
+							datePattern="#{registrarChamadaController.formatDataChamada}"
+							locale="#{registrarChamadaController.locale}"
+							showWeeksBar="false" resetTimeOnDateSelect="true" /></td>
+				</tr>
+				<tr>
+					<td class="td_filtro"><h:outputText
+							value="#{i18n['label.turno']}" />:<br /> <h:selectOneMenu
+							id="selectTurno"
+							value="#{registrarChamadaController.idTurnoSelected}">
+							<f:selectItem itemLabel="#{i18n['label.selecione']}"
+								itemValue="0" noSelectionOption="true" />
+							<f:selectItems value="#{registrarChamadaController.turnos}"
+								var="turno" itemLabel="#{turno.nomeTurno}"
+								itemValue="#{turno.id}" />
+
+						</h:selectOneMenu></td>
+					<td class="td_filtro"><h:outputText
+							value="#{i18n['label.serie']}" />:<br /> <h:selectOneMenu
+							id="selectSerie"
+							value="#{registrarChamadaController.idSerieSelected}">
+							<f:selectItem itemLabel="#{i18n['label.selecione']}"
+								itemValue="0" noSelectionOption="true" />
+							<f:selectItems value="#{registrarChamadaController.series}"
+								var="serie" itemLabel="#{serie.nomeSerie}"
+								itemValue="#{serie.id}" />
+						</h:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="td_filtro">
+					<h:selectBooleanCheckbox id="apenasPendentesCheck" value="#{registrarChamadaController.apenasPendentes}" />	<h:outputLabel value="#{i18n['selecionarTurmachamada.label.apenasPendentes']}" for="apenasPendentesCheck" />
+					</td>
+				</tr>
+			</table>
+			<br />
+			<h:commandButton value="#{i18n['button.pesquisar']}"
+				action="#{registrarChamadaController.pesquisarTurmas}">
+				<f:ajax render="paneListaTurmas" execute="@form">
+					<f:param name="cid" value="#{registrarChamadaController.conversation.id}"/>
+				</f:ajax>
+			</h:commandButton>
+			<br />
+			<br />
+			<a4j:outputPanel id="paneListaTurmas" layout="block">
+
+				<rich:dataTable value="#{registrarChamadaController.turmas}"
+					var="turma" sortMode="multi">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['label.turno']}" />
+						</f:facet>
+						<h:outputText value="#{turma.turno.nomeTurno}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['label.ensino']}" />
+						</f:facet>
+						<h:outputText value="#{turma.serie.ensino.nomeEnsino}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['label.serie']}" />
+						</f:facet>
+						<h:outputText value="#{turma.serie.nomeSerie}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{i18n['label.turma']}" />
+						</f:facet>
+						<h:outputText value="#{turma.nomeTurma}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{i18n['selecionarTurmaChamada.label.dataUltimaChamada']}" />
+						</f:facet>
+						<h:outputText value="#{turma.ultimaChamada.dataChamada}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{i18n['selecionarTurmaChamada.botao.iniciarChamada']}" />
+						</f:facet>
+						<div style="width: 100%; text-align: center">
+							<a4j:commandLink value=""
+								action="#{registrarChamadaController.iniciarChamada}">
+								<img src="../../images/iniciar_chamada_tiny.png"
+									style="text-align: center" />
+								<a4j:param value="#{turma.id}"
+									assignTo="#{registrarChamadaController.idTurmaSelected}" />
+							</a4j:commandLink>
+						</div>
+					</h:column>
+				</rich:dataTable>
+			</a4j:outputPanel>
+			<br />
+		</rich:panel>		
+	</h:form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Colaboradores">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="ColaboradoresClient.jar" deploy-path="/" handle="module:/resource/ColaboradoresClient/ColaboradoresClient">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ColaboradoresEJB.jar" deploy-path="/" handle="module:/resource/ColaboradoresEJB/ColaboradoresEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ColaboradoresWeb.war" deploy-path="/" handle="module:/resource/ColaboradoresWeb/ColaboradoresWeb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ColaboradoresDominio.jar" deploy-path="/lib" handle="module:/resource/ColaboradoresDominio/ColaboradoresDominio">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
